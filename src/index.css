@@ -1,0 +1,282 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-base: #eef2f7;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f6f8fb;
+
+  /* Outer freeze = MacBook Air 13.6" default CSS width (2560×1664 Retina).
+     Wider monitors only grow empty gutters outside this frame. */
+  --page-frame-width: 1470px;
+  /* Inner content column — matches the composition that looks right on that laptop. */
+  --page-max-width: 1120px;
+
+  --clay-purple: #6366f1;
+  --clay-lavender: #818cf8;
+  --clay-peach: #f472b6;
+  --clay-orange: #fb923c;
+  --clay-blue: #3b82f6;
+  --clay-green: #10b981;
+  --clay-yellow: #f59e0b;
+
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+
+  --shadow-clay:
+    inset 4px 4px 8px rgba(255, 255, 255, 0.6),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.06), 8px 12px 28px rgba(0, 0, 0, 0.06);
+
+  --shadow-clay-hover:
+    inset 5px 5px 10px rgba(255, 255, 255, 0.7),
+    inset -5px -5px 10px rgba(0, 0, 0, 0.07), 12px 16px 36px rgba(0, 0, 0, 0.08);
+
+  --shadow-clay-inset:
+    inset 3px 3px 6px rgba(255, 255, 255, 0.55),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.05);
+
+  --shadow-clay-button:
+    inset 3px 3px 6px rgba(255, 255, 255, 0.35),
+    inset -3px -3px 6px rgba(67, 56, 202, 0.2),
+    0 8px 22px rgba(99, 102, 241, 0.3);
+
+  --shadow-clay-button-secondary:
+    inset 3px 3px 6px rgba(255, 255, 255, 0.6),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.05), 4px 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.section-snap {
+  /* Full-viewport snaps are for desktop choreography only.
+     On mobile, let sections size to content so we don't get huge empty gaps. */
+  min-height: 0;
+}
+
+@media (min-width: 1024px) {
+  .section-snap {
+    min-height: 100vh;
+  }
+}
+
+/* Centered MacBook-sized frame — past 1470px only side gutters grow.
+   Inner .page-shell still caps the content column at 1120px. */
+.page-frame {
+  width: 100%;
+  max-width: var(--page-frame-width);
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+/* Centered content shell — width hard-capped.
+   Viewports wider than --page-max-width only grow left/right gutters;
+   section content (grids, desks, type) does not scale up. */
+.page-shell {
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Custom particle cursor only replaces the pointer on real mouse devices.
+   Touch / coarse-pointer devices keep their native behavior. */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    cursor: none;
+  }
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(99, 102, 241, 0.08),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(59, 130, 246, 0.06),
+      transparent 28%
+    ),
+    var(--bg-base);
+  color: var(--text-primary);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* One Piece display type — headings / labels only; body stays Inter */
+h1,
+h2,
+h3,
+.clay-section-label,
+.clay-section-heading,
+.op-display {
+  font-family: "Cinzel", Georgia, "Times New Roman", serif;
+}
+
+.clay-card {
+  background: var(--bg-surface);
+  border-radius: 28px;
+  box-shadow: var(--shadow-clay);
+}
+
+.clay-card-hover {
+  transition:
+    transform 260ms ease,
+    box-shadow 260ms ease;
+}
+.clay-card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-clay-hover);
+}
+
+.clay-button {
+  border-radius: 999px;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+.clay-button:hover {
+  transform: translateY(-2px);
+}
+
+.clay-button-primary {
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  color: #ffffff;
+  box-shadow: var(--shadow-clay-button);
+}
+
+.clay-button-secondary {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-clay-button-secondary);
+}
+.clay-button-secondary:hover {
+  color: var(--text-primary);
+}
+
+.clay-pill {
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-clay-inset);
+  border-radius: 999px;
+}
+
+.clay-inset {
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-clay-inset);
+  border-radius: 20px;
+}
+
+.clay-tag {
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-clay-inset);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  transition: all 200ms ease;
+}
+.clay-tag:hover {
+  color: var(--clay-purple);
+  transform: translateY(-1px);
+}
+
+.clay-section-label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+  color: var(--clay-purple);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.clay-section-heading {
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.op-mark {
+  display: inline-block;
+  width: 3.75rem;
+  height: 3.75rem;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 0.65rem;
+  filter: drop-shadow(0 4px 10px rgba(67, 56, 202, 0.18));
+}
+
+/* Sealed scroll is wider — keep mark height, let width breathe */
+.op-mark-scroll {
+  width: 5.25rem;
+  height: 3.75rem;
+}
+
+@keyframes ship-sea-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-94px);
+  }
+}
+.ship-sea-drift {
+  animation: ship-sea-drift 4.5s linear infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ship-sea-drift {
+    animation: none;
+  }
+}
+
+/* ── Skills marquee (cheap, GPU-composited: one animation per row) ── */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-row {
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: marquee-x var(--marquee-duration, 34s) linear infinite;
+  will-change: transform;
+}
+.marquee-track.reverse {
+  animation-direction: reverse;
+}
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* Contact section uses full-bleed OP map art; no extra avatar-stage FX. */
+
+
